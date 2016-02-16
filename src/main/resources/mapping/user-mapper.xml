@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.llce.gmis.dao.UserDao">
+ 
+ <!-- mapping -->
+ <resultMap id="User_t" type="com.llce.gmis.entity.User">
+ <id property="userId" column="user_id" jdbcType="INTEGER" />
+ <result property="userName" column="user_name" jdbcType="VARCHAR" />
+ <result property="passwordHash" column="pwd_hash" jdbcType="VARCHAR" />
+ <result property="email" column="email" jdbcType="VARCHAR"/>
+ <result property="passwordQuestion" column="pwd_question" jdbcType="VARCHAR"/>
+ <result property="passwordAnswer" column="pwd_answer" jdbcType="VARCHAR" />
+ <result property="createDate" column="create_date" jdbcType="DATE" />
+ <result property="updateDate" column="update_date" jdbcType="DATE" />
+ <result property="loginKey" column="login_key" jdbcType="VARCHAR" />
+ <result property="lastLoginDate" column="last_login_date" jdbcType="DATE" />
+ <result property="lastActivityDate" column="last_activity_date" jdbcType="DATE" />
+ <result property="role" column="role" typeHandler="com.llce.gmis.utils.typeHandler.EnumRoleHandler"/>
+ </resultMap>
+ 
+ <sql id="columns">
+ user_id,
+ user_name,
+ pwd_hash,
+ email,
+ pwd_question,
+ pwd_answer,
+ create_date,
+ role
+ </sql>
+ 
+ 
+ <!-- 根据ID查询用户信息 -->
+ <select id="queryUserById" resultMap="User_t">
+ SELECT
+ <include refid="columns" />
+ FROM
+ t_user
+ WHERE
+ user_id = #{userId}
+ </select>
+ 
+</mapper>
