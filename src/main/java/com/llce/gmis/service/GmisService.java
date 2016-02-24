@@ -12,8 +12,10 @@ public class GmisService {
 	@Autowired
 	private UserDao userDao;
 	
-	public User getUserById(int userId){
-		return userDao.queryUserById(userId);
+	public User getUserByUserName(String userName){
+		return userDao.queryUserByUserName(userName);
 	}
+	
+	
 	
 }

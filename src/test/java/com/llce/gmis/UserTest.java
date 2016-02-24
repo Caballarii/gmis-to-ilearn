@@ -22,6 +22,7 @@ private GmisService gmisService;
 	
 	@Test
     public void getUser(){
-        System.out.println(gmisService.getUserById(1000).getRole());
+		System.out.println(gmisService.getUserByUserName("admin").getUserId());
+        //System.out.println(gmisService.getUserById(1000).isDisabled());
     }
 }

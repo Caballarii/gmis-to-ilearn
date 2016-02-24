@@ -4,6 +4,6 @@ import com.llce.gmis.entity.User;
 
 public interface UserDao {
 
-	public User queryUserById(int userId);
+	public User queryUserByUserName(String userName);
 	
 }
