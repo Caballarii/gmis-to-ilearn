@@ -6,4 +6,6 @@ public interface UserDao {
 
 	public User queryUserByUserName(String userName);
 	
+	public int insertUser(User user);
+	
 }

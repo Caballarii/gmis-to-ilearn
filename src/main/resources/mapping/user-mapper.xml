@@ -7,7 +7,7 @@
  <resultMap id="User_t" type="com.llce.gmis.entity.User">
  <id property="userId" column="user_id" jdbcType="INTEGER" />
  <result property="userName" column="user_name" jdbcType="VARCHAR" />
- <result property="passwordHash" column="pwd_hash" jdbcType="VARCHAR" />
+ <result property="passwordHash" column="pwd_hash" jdbcType="VARCHAR" typeHandler="com.llce.gmis.utils.typeHandler.PasswordHandler"/>
  <result property="email" column="email" jdbcType="VARCHAR"/>
  <result property="passwordQuestion" column="pwd_question" jdbcType="VARCHAR"/>
  <result property="passwordAnswer" column="pwd_answer" jdbcType="VARCHAR" />
@@ -15,51 +15,72 @@
  <result property="updateDate" column="update_date" jdbcType="DATE" />
  <result property="loginKey" column="login_key" jdbcType="VARCHAR" />
  <result property="lastLoginDate" column="last_login_date" jdbcType="DATE" />
- <result property="lastActivityDate" column="last_activity_date" jdbcType="DATE" />
+ <result property="lastActivityDate" column="last_act_date" jdbcType="DATE" />
  <result property="role" column="role" typeHandler="com.llce.gmis.utils.typeHandler.EnumRoleHandler"/>
  <result property="isDisabled" column="is_disabled" jdbcType="BIT" javaType="BOOLEAN"/>
  <result property="isDeleted" column="is_deleted" jdbcType="BIT" javaType="BOOLEAN"/>
- <result property="lastLoginAttemptDate" column="last_login_attempt_date" jdbcType="DATE" />
- <result property="loginAttemptionCount" column="login_attemption_count" jdbcType="INTEGER" />
+ <result property="lastLoginAttemptDate" column="last_login_attempt" jdbcType="DATE" />
+ <result property="loginAttemptionCount" column="login_attemption" jdbcType="INTEGER" />
  <result property="headPicB" column="head_pic_b" jdbcType="VARCHAR" />
  <result property="headPicS" column="head_pic_s" jdbcType="VARCHAR" />
+ <result property="points" column="points" jdbcType="VARCHAR" />
  </resultMap>
  
  <sql id="columns">
- user_id,
  user_name,
  pwd_hash,
  email,
  pwd_question,
  pwd_answer,
  create_date,
+ update_date,
+ last_login_date,
+ last_act_date,
+ login_key,
  role,
  is_disabled,
  is_deleted,
  last_login_attempt,
  login_attemption,
  head_pic_b,
- head_pic_s
+ head_pic_s,
+ points
  </sql>
  
  
  <!-- 根据ID查询用户信息 -->
  <select id="queryUserByUserName" resultMap="User_t">
  SELECT
+ user_id,
  <include refid="columns" />
  FROM
  t_user
  WHERE
  user_name = #{userName}
  </select>
- <!-- 
- <insert id="insertUser" parameterType="User">
+  
+ <insert id="insertUser" useGeneratedKeys="true" keyProperty="userId" parameterType="com.llce.gmis.entity.User">
  	insert into t_user(<include refid="columns" />)
  	values(
- 	#{userId},
- 	#{
- 	
+ 	#{userName},
+ 	#{passwordHash,typeHandler=com.llce.gmis.utils.typeHandler.PasswordHandler},
+    #{email},
+    #{passwordQuestion},
+    #{passwordAnswer},
+    #{createDate},
+    #{updateDate},
+    #{lastLoginDate},
+    #{lastActivityDate},
+    #{loginKey},
+    #{role,typeHandler=com.llce.gmis.utils.typeHandler.EnumRoleHandler},
+    #{isDisabled},
+    #{isDeleted},
+    #{lastLoginAttemptDate},
+    #{loginAttemptionCount},
+    #{headPicB},
+    #{headPicS},
+    #{points} 	
  	)
- </insert> -->
+ </insert>
  
 </mapper>

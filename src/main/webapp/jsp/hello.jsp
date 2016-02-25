@@ -16,6 +16,7 @@ $(document).ready(function(){
 			dataType:'json'
 		}).done(function(data,status,xhr){
 			$("#userId").val(data.userId);
+			$("#password").val(data.passwordHash);
 		}).fail(function(xhr,status,error){
 			alert("查无此用户");
 		});
@@ -33,12 +34,31 @@ $(document).ready(function(){
 			alert("删除失败");
 		});
 	});
+	$("#btnAdd").click(function(){
+		var userId=$("#userId").val();
+		$.ajax({
+			url:"http://localhost:8080/gmis-to-ilearn/gmis/v1/user",
+			type:'POST',
+			dataType:'json',
+			data:{userName:$("#userName").val(),passwordHash:$("#password").val()}
+		}).done(function(data,status,xhr){
+			if(data.msg=="success"){
+				alert(data.userId);
+			}
+			else{
+				alert(data.msg);
+			}
+		}).fail(function(xhr,status,error){
+			alert("删除失败");
+		});
+	});
 });
 </script>
 </head>
 <body>
-<a href="#" id="btnGet">查询</a>&nbsp;&nbsp;<a href="#" id="btnDelete">删除</a><br/>
+<a href="#" id="btnGet">查询</a>&nbsp;&nbsp;<a href="#" id="btnDelete">删除</a><br/>&nbsp;&nbsp;<a href="#" id="btnAdd">添加</a><br/>
 userId:<input type="text" name="userId" id="userId"/><br/>
 userName:<input type="text" name="userName" id="userName"/><br/>
+password:<input type="text" name="password" id="password"/><br/>
 </body>
 </html>
