@@ -21,7 +21,6 @@ public class GmisService {
 	}
 	
 	public int addUser(User user){
-		//user.setPasswordHash(Base64Utils.encode(user.getPasswordHash()));
 		user.setEmail("");
 		user.setPasswordQuestion("");
 		user.setPasswordAnswer("");
@@ -38,6 +37,10 @@ public class GmisService {
 		user.setHeadPicB("/files/img/user/initial/initial_b.gif");
 		user.setHeadPicS("/files/img/user/initial/initial_s.gif");
 		return userDao.insertUser(user);
+	}
+	
+	public void deleteUser(int userId){
+		userDao.deleteUser(userId);
 	}
 	
 }

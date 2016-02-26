@@ -31,14 +31,14 @@ public class GmisController {
 	@RequestMapping(value="/user/{userName:\\w+}",method=RequestMethod.GET)
 	public @ResponseBody User getUser(@PathVariable(value="userName") String userName){
 		User user=gmisService.getUserByUserName(userName);
-		//user.setPasswordHash((String)Base64Utils.decode(user.getPasswordHash()));
 		return user;
 	}
 	
 	@RequestMapping(value="/user/{id:\\d+}",method=RequestMethod.DELETE)
 	public @ResponseBody Object deleteUser(@PathVariable("id") int id){
+		gmisService.deleteUser(id);
 		JSONObject jsonObject=new JSONObject();
-		jsonObject.put("msg", "删除成功");
+		jsonObject.put("msg", "success");
 		return jsonObject;
 	}
 	

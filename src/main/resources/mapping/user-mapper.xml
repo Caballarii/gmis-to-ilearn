@@ -56,7 +56,9 @@
  FROM
  t_user
  WHERE
- user_name = #{userName}
+ user_name = #{userName} 
+ and
+ is_deleted = 0
  </select>
   
  <insert id="insertUser" useGeneratedKeys="true" keyProperty="userId" parameterType="com.llce.gmis.entity.User">
@@ -82,5 +84,17 @@
     #{points} 	
  	)
  </insert>
+ 
+ <update id="deleteUser">
+ 	update t_user set is_deleted=#{isDeleted} where user_id=#{userId}
+ </update>
+ 
+ <update id="updateUser">
+ 	update t_user set 
+ 	<if test="password!=null">
+ 		pwd_hash=#{passwordHash,typeHandler=com.llce.gmis.utils.typeHandler.PasswordHandler}
+ 	</if>
+ 	
+ </update>
  
 </mapper>

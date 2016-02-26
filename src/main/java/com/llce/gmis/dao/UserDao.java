@@ -8,4 +8,6 @@ public interface UserDao {
 	
 	public int insertUser(User user);
 	
+	public void deleteUser(int userId);
+	
 }
