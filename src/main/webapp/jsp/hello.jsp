@@ -35,7 +35,6 @@ $(document).ready(function(){
 		});
 	});
 	$("#btnAdd").click(function(){
-		var userId=$("#userId").val();
 		$.ajax({
 			url:"http://localhost:8080/gmis-to-ilearn/gmis/v1/user",
 			type:'POST',
@@ -43,7 +42,7 @@ $(document).ready(function(){
 			data:{userName:$("#userName").val(),passwordHash:$("#password").val()}
 		}).done(function(data,status,xhr){
 			if(data.msg=="success"){
-				alert(data.userId);
+				$("#userId").val(data.userId);
 			}
 			else{
 				alert(data.msg);
@@ -52,11 +51,24 @@ $(document).ready(function(){
 			alert("删除失败");
 		});
 	});
+	$("#btnUpdate").click(function(){
+		
+		$.ajax({
+			url:"http://localhost:8080/gmis-to-ilearn/gmis/v1/user",
+			type:'POST',
+			dataType:'json',
+			data:{_method:"patch",userId:$("#userId").val(),userName:$("#userName").val(),passwordHash:$("#password").val()}
+		}).done(function(data,status,xhr){
+			alert(data.msg);
+		}).fail(function(xhr,status,error){
+			alert("更新失败");
+		});
+	});
 });
 </script>
 </head>
 <body>
-<a href="#" id="btnGet">查询</a>&nbsp;&nbsp;<a href="#" id="btnDelete">删除</a><br/>&nbsp;&nbsp;<a href="#" id="btnAdd">添加</a><br/>
+<a href="#" id="btnGet">查询</a>&nbsp;&nbsp;<a href="#" id="btnDelete">删除</a>&nbsp;&nbsp;<a href="#" id="btnAdd">添加</a>&nbsp;&nbsp;<a href="#" id="btnUpdate">更新</a><br/>
 userId:<input type="text" name="userId" id="userId"/><br/>
 userName:<input type="text" name="userName" id="userName"/><br/>
 password:<input type="text" name="password" id="password"/><br/>

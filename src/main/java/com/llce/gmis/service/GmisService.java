@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.llce.gmis.dao.UserDao;
 import com.llce.gmis.entity.User;
 import com.llce.gmis.entity.UserRole;
-import com.llce.gmis.utils.encoder.Base64Utils;
 
 @Service("gmisService")
 public class GmisService {
@@ -41,6 +40,10 @@ public class GmisService {
 	
 	public void deleteUser(int userId){
 		userDao.deleteUser(userId);
+	}
+	
+	public void updateUser(User user){
+		userDao.updateUser(user);
 	}
 	
 }

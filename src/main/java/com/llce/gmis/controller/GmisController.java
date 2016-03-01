@@ -1,7 +1,5 @@
 package com.llce.gmis.controller;
 
-import java.util.Date;
-
 import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.llce.gmis.entity.User;
-import com.llce.gmis.entity.UserRole;
 import com.llce.gmis.service.GmisService;
-import com.llce.gmis.utils.encoder.Base64Utils;
 
 @Controller
 @RequestMapping("/gmis/v1")
@@ -53,6 +49,14 @@ public class GmisController {
 		gmisService.addUser(user);
 		jsonObject.put("msg", "success");
 		jsonObject.put("userId", user.getUserId());
+		return jsonObject;
+	}
+	
+	@RequestMapping(value="/user",method=RequestMethod.PATCH)
+	public @ResponseBody Object updateUser(User user){
+		gmisService.updateUser(user);
+		JSONObject jsonObject=new JSONObject();
+		jsonObject.put("msg", "success");
 		return jsonObject;
 	}
 	

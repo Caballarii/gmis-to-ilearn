@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
-import com.llce.gmis.entity.UserRole;
 import com.llce.gmis.utils.encoder.Base64Utils;
 
 public class PasswordHandler extends BaseTypeHandler<String>{
