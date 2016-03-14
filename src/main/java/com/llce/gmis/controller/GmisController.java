@@ -2,9 +2,12 @@ package com.llce.gmis.controller;
 
 import net.sf.json.JSONObject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +19,8 @@ import com.llce.gmis.service.GmisService;
 @RequestMapping("/gmis/v1")
 public class GmisController {
 	
+	private static Logger logger = LoggerFactory.getLogger(GmisController.class);
+	
 	@Autowired
 	private GmisService gmisService;
 	
@@ -25,9 +30,22 @@ public class GmisController {
 	}
 	
 	@RequestMapping(value="/user/{userName:\\w+}",method=RequestMethod.GET)
-	public @ResponseBody User getUser(@PathVariable(value="userName") String userName){
+	public @ResponseBody Object getUser(@PathVariable(value="userName") String userName){
+		logger.info("searching user:"+userName);
 		User user=gmisService.getUserByUserName(userName);
-		return user;
+		JSONObject jsonObject=new JSONObject();
+		if(user==null){
+			jsonObject.put("msg", "not found");
+			logger.warn(userName+" not found!");
+		}
+		else{
+			jsonObject.put("msg", "success");
+			jsonObject.put("userId", user.getUserId());
+			jsonObject.put("userName", user.getUserName());
+			jsonObject.put("passwordHash", user.getPasswordHash());
+			logger.info(userName+" found.");
+		}
+		return jsonObject;
 	}
 	
 	@RequestMapping(value="/user/{id:\\d+}",method=RequestMethod.DELETE)
@@ -53,7 +71,7 @@ public class GmisController {
 	}
 	
 	@RequestMapping(value="/user",method=RequestMethod.PATCH)
-	public @ResponseBody Object updateUser(User user){
+	public @ResponseBody Object updateUser(@RequestBody User user){
 		gmisService.updateUser(user);
 		JSONObject jsonObject=new JSONObject();
 		jsonObject.put("msg", "success");

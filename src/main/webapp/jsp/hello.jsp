@@ -15,6 +15,9 @@ $(document).ready(function(){
 			type:'GET',
 			dataType:'json'
 		}).done(function(data,status,xhr){
+			if(data.msg!="success"){
+				alert(data.msg);
+			}
 			$("#userId").val(data.userId);
 			$("#password").val(data.passwordHash);
 		}).fail(function(xhr,status,error){
@@ -51,13 +54,15 @@ $(document).ready(function(){
 			alert("删除失败");
 		});
 	});
-	$("#btnUpdate").click(function(){
-		
+	$("#btnUpdate").click(function(){	
+		var saveData={"userId":$("#userId").val(),"userName":$("#userName").val(),"passwordHash":$("#password").val()};
 		$.ajax({
 			url:"http://localhost:8080/gmis-to-ilearn/gmis/v1/user",
-			type:'POST',
+			type:'PATCH',
 			dataType:'json',
-			data:{_method:"patch",userId:$("#userId").val(),userName:$("#userName").val(),passwordHash:$("#password").val()}
+			contentType:"application/json",
+			//data:{_method:"put","userId":$("#userId").val(),"userName":$("#userName").val(),"passwordHash":$("#password").val()}
+			data:JSON.stringify(saveData)
 		}).done(function(data,status,xhr){
 			alert(data.msg);
 		}).fail(function(xhr,status,error){
