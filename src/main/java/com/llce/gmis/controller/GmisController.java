@@ -60,7 +60,7 @@ public class GmisController {
 	}
 	
 	@RequestMapping(value="/user",method=RequestMethod.POST)
-	public @ResponseBody Object addUser(User user){
+	public @ResponseBody Object addUser(@RequestBody User user){
 		logger.info("add user:"+user.getUserName());
 		JSONObject jsonObject=new JSONObject();
 		if(gmisService.getUserByUserName(user.getUserName())!=null){

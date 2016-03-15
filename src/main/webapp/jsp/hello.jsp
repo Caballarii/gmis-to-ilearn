@@ -38,11 +38,14 @@ $(document).ready(function(){
 		});
 	});
 	$("#btnAdd").click(function(){
+		var saveData={"userName":$("#userName").val(),"passwordHash":$("#password").val()};
 		$.ajax({
 			url:"http://localhost:8080/gmis-to-ilearn/gmis/v1/user",
 			type:'POST',
+			contentType:"application/json",
 			dataType:'json',
-			data:{userName:$("#userName").val(),passwordHash:$("#password").val()}
+			//data:{userName:$("#userName").val(),passwordHash:$("#password").val()}
+			data:JSON.stringify(saveData)
 		}).done(function(data,status,xhr){
 			if(data.msg=="success"){
 				$("#userId").val(data.userId);
@@ -51,7 +54,7 @@ $(document).ready(function(){
 				alert(data.msg);
 			}
 		}).fail(function(xhr,status,error){
-			alert("删除失败");
+			alert("添加失败");
 		});
 	});
 	$("#btnUpdate").click(function(){	
