@@ -36,7 +36,8 @@ public class GmisController {
 		JSONObject jsonObject=new JSONObject();
 		if(user==null){
 			jsonObject.put("msg", "not found");
-			logger.warn(userName+" not found!");
+			logger.error("error:"+userName+" not found!");
+		
 		}
 		else{
 			jsonObject.put("msg", "success");
@@ -50,31 +51,38 @@ public class GmisController {
 	
 	@RequestMapping(value="/user/{id:\\d+}",method=RequestMethod.DELETE)
 	public @ResponseBody Object deleteUser(@PathVariable("id") int id){
+		logger.info("deleting user by id:"+id);
 		gmisService.deleteUser(id);
 		JSONObject jsonObject=new JSONObject();
 		jsonObject.put("msg", "success");
+		logger.info("deleting '"+id+"' success");
 		return jsonObject;
 	}
 	
 	@RequestMapping(value="/user",method=RequestMethod.POST)
 	public @ResponseBody Object addUser(User user){
+		logger.info("add user:"+user.getUserName());
 		JSONObject jsonObject=new JSONObject();
 		if(gmisService.getUserByUserName(user.getUserName())!=null){
 			jsonObject.put("msg","duplicated");
+			logger.error("error:duplicated username:"+user.getUserName());
 			return jsonObject;
 		}
 	
 		gmisService.addUser(user);
 		jsonObject.put("msg", "success");
 		jsonObject.put("userId", user.getUserId());
+		logger.info("user '"+user.getUserName()+"' added successfully");
 		return jsonObject;
 	}
 	
 	@RequestMapping(value="/user",method=RequestMethod.PATCH)
 	public @ResponseBody Object updateUser(@RequestBody User user){
+		logger.info("update user:"+user.getUserName());
 		gmisService.updateUser(user);
 		JSONObject jsonObject=new JSONObject();
 		jsonObject.put("msg", "success");
+		logger.info("update user '"+user.getUserName()+"' successfully");
 		return jsonObject;
 	}
 	

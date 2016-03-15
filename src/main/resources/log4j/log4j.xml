@@ -14,8 +14,10 @@
 			<param name="LevelMin" value="DEBUG" /> 
 		</filter> 
 	</appender>
-	<root>       
-        <priority value ="debug"/>              
-        <appender-ref ref="myFile"/>          
-    </root> 
+	<category name="com.llce">
+		<priority value="info" />
+	  <appender-ref ref="myFile" />
+	</category> 
+    
+    
 </log4j:configuration>
