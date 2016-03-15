@@ -5,7 +5,7 @@
 导入eclipse：http://www.cnblogs.com/lpshou/archive/2013/07/18/3199243.html 推荐使用方法二
 修改src/main/resources中的config.properties中的数据库连接信息
 使用maven插件执行package命令，将打包好的war放入tomcat目录中部署即可
-建议使用环境jdk1.7,tomcat7,运行环境只需要能被gmis访问且能访问香港服务器，也可直接部署至香港服务器
+建议使用环境jdk1.6,tomcat7,运行环境只需要能被gmis访问且能访问香港服务器，也可直接部署至香港服务器
 
 功能说明：
 接收四种请求，以下contextpath代表项目访问路径，如http://localhost:8080/gmis-to-ilearn
